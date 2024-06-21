@@ -1,0 +1,23 @@
+services:
+  database:
+    build:
+      context: ./database
+    image: database
+    volumes:
+      - db-data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: cases123
+    ports:
+      - "3306:3306"
+
+  webapp:
+    build:
+      context: ./webapp
+    image: flask_app
+    ports:
+      - 80:80
+    depends_on:
+      - database
+
+volumes:
+  db-data:
